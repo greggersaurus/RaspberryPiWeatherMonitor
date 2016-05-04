@@ -1,8 +1,8 @@
 <?php
 /*
-Plugin Name: rp-weather-monitor.php
+Plugin Name: Raspberry Pi Weather Monitor
 Plugin URI: https://github.com/greggersaurus/RaspberryPiWeatherMonitor
-Description: a Test by ggluszek
+Description: Allows for weather statistics gathered by Sense HAT to be disaplyed in nice charts using WordPress Charts plug-in
 Version: 0
 Author: Greg Gluszek
 Author URI: https://github.com/greggersaurus
@@ -14,7 +14,9 @@ Author URI: https://github.com/greggersaurus
  * @param $atts
  * @return string
  */
-function rp_weather_graph_shortcode( $atts ) {
+function rp_weather_graph_shortcode( $atts ) 
+{
+	global $wpdb;
 
 	// atts tell us which data to graph
 //TODO
@@ -24,7 +26,13 @@ function rp_weather_graph_shortcode( $atts ) {
 
 	// Fill in data sets from sql query
 //TODO
-	$datasets = '40,13,61,70 next 33,15,40,22';
+	$resultSet = $wpdb->get_results("select * from weather order by id desc limit 10", ARRAY_A);
+
+	foreach ($resultSet as $row) 
+	{
+		$datasets .= $row['temperature'] . ",";
+		$labels .= $row['datetime'] . ",";
+	}
 
 	// Perform check that wp-charts plugin is present and active
 //TODO
@@ -34,7 +42,7 @@ function rp_weather_graph_shortcode( $atts ) {
 	return wp_charts_shortcode(
 		array( 'type' => 'Line',
 			'datasets' => $datasets,
-			'labels' => 'one,two,three,four'));
+			'labels' => $labels));
 }
 
 /**
@@ -42,7 +50,8 @@ function rp_weather_graph_shortcode( $atts ) {
  *
  * @since Unknown
  */
-function rp_weather_monitor_kickoff() {
+function rp_weather_monitor_kickoff() 
+{
 	add_shortcode( 'rp_weather_graph', 'rp_weather_graph_shortcode' );
 }
 
