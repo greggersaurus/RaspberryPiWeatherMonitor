@@ -4,6 +4,11 @@ CREATE TABLE IF NOT EXISTS `weather` (
   `temperature_pressure` float NOT NULL,
   `humidity` float NOT NULL,
   `pressure` float NOT NULL,
-  `datetime` datetime NOT NULL,
+  `year` smallint unsigned NOT NULL,
+  `month` tinyint unsigned NOT NULL,
+  `day` tinyint unsigned NOT NULL,
+  `hour` tinyint unsigned NOT NULL,
+  `minute` tinyint unsigned NOT NULL,
+  `second` tinyint unsigned NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;

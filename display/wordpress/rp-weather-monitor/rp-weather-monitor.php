@@ -31,7 +31,7 @@ function rp_weather_graph_shortcode( $atts )
 	foreach ($resultSet as $row) 
 	{
 		$datasets .= $row['temperature'] . ",";
-		$labels .= $row['datetime'] . ",";
+		$labels .= $row['minute'] . ",";
 	}
 
 	// Perform check that wp-charts plugin is present and active
